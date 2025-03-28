@@ -1,0 +1,67 @@
+@tailwind base;
+
+@property --border-angle {
+  inherits: false;
+  initial-value: 0deg;
+  syntax: "<angle>";
+}
+
+@tailwind components;
+@tailwind utilities;
+
+@layer components {
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply bg-white/60;
+  }
+
+  .formik-form input,
+  select {
+    @apply my-5 bg-transparent p-3 border border-blue-400 focus:outline-none focus:bg-transparent text-black dark:text-white;
+  }
+
+  .field_label {
+    @apply text-black dark:text-white;
+  }
+
+  .fields {
+    @apply border border-blue-400 focus:outline-none focus:bg-transparent text-black dark:text-white px-2 py-2 w-full my-5;
+  }
+
+  .form {
+    @apply sm:px-32 md:px-40 lg:px-64 xl:px-[30%] 2xl:px-[35%];
+  }
+  .carousel-heading {
+    @apply text-white text-3xl font-semibold font-poppins;
+  }
+  .carousel-desc {
+    @apply text-white text-4xl font-bold;
+  }
+  .carousel-icons {
+    @apply w-40 h-40 object-contain;
+  }
+}
+
+::-webkit-scrollbar {
+  width: 6px;
+  height: 2px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+  border-radius: 8px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #0d1827;
+  transition: all;
+  border-radius: 8px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #101d30;
+  transition: all;
+}

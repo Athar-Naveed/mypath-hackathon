@@ -20,13 +20,14 @@ export const fetchChatHistory = async () => {
     next: {revalidate: 6000},
   });
   const responseMessage = await response.json();
+
   if (responseMessage.status === 200) {
     const normalizedMessages: ChatbotMessageType[] = responseMessage.message.flatMap(
       (entry: any) => [
         {role: "user", content: entry.prompt},
         {
           role: "PathAI",
-          content: entry.ai_response,
+          content: entry.gemini_response,
           visualization: entry.visualization,
         },
       ],

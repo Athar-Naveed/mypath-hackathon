@@ -3,8 +3,6 @@
 // Imports
 // ------------------------
 import {useRef, useEffect} from "react";
-import {fetchChatHistory} from "../../mpHandler/chatbotChatHandler";
-import {ChatbotMessageType} from "@/types";
 import {HighlightPopover} from "@omsimos/react-highlight-popover";
 import renderPopover from "./Popover";
 import ChatbotMessages from "./Messages";
@@ -13,52 +11,60 @@ import {socket} from "@/lib/socketClient";
 import ChatbotInputField from "./ChatbotInput";
 import {useChatbotStore} from "../../store/chatbotStore";
 import {oneChabotMessage} from "../../components/global/constants";
+import {ChatbotMessageType} from "@/types";
+import {fetchChatHistory} from "../../mpHandler/chatbotChatHandler";
 
 // ------------------------
 // Chatbot chat code starts here
 // ------------------------
 const ChatBotChat = () => {
   const store = stateStore();
-  const {thinking, messages, setMessages} = useChatbotStore();
+  const {newChat, thinking, messages, fetchChat, setMessages} = useChatbotStore();
 
   // ------------------------
-  // Fetching chat history here
+  // Fetching chat  here
   // ------------------------
+
   useEffect(() => {
-    const fetchChats = async () => {
-      try {
-        const message: ChatbotMessageType = oneChabotMessage(
-          "PathAI",
-          "chat",
-          "Just Wait! Fetching your chats; if any...",
-        ) as ChatbotMessageType;
-        setMessages([message]);
-        const resp = await fetchChatHistory();
-        const greetMessage: ChatbotMessageType = oneChabotMessage(
-          "PathAI",
-          "chat",
-          "Hi there! Up for something new.",
-        ) as ChatbotMessageType;
-        if (resp.length <= 0) {
-          setMessages([greetMessage]);
-        } else {
-          const initialMessage: ChatbotMessageType[] = [greetMessage];
-          setMessages([...initialMessage, ...resp]);
+    console.log(`new chat: ${newChat} -- fetch chat: ${fetchChat}`);
+    if (!newChat && fetchChat) {
+      const fetchChats = async () => {
+        try {
+          const message: ChatbotMessageType = oneChabotMessage(
+            "PathAI",
+            "chat",
+            "Just Wait! Fetching your chats; if any...",
+          ) as ChatbotMessageType;
+          setMessages([message]);
+          const resp = await fetchChatHistory();
+
+          const greetMessage: ChatbotMessageType = oneChabotMessage(
+            "PathAI",
+            "chat",
+            "Hi there! Up for something new.",
+          ) as ChatbotMessageType;
+          if (resp.length <= 0) {
+            setMessages([greetMessage]);
+          } else {
+            const initialMessage: ChatbotMessageType[] = [greetMessage];
+            setMessages([...initialMessage, ...resp]);
+          }
+        } catch (error) {
+          const message: ChatbotMessageType = oneChabotMessage(
+            "PathAI",
+            "chat",
+            "The chatbot got chills🥶 while fetching your chats! Please try refreshing the page!",
+          ) as ChatbotMessageType;
+          setMessages([message]);
         }
-      } catch (error) {
-        const message: ChatbotMessageType = oneChabotMessage(
-          "PathAI",
-          "chat",
-          "The chatbot got chills🥶 while fetching your chats! Please try refreshing the page!",
-        ) as ChatbotMessageType;
-        setMessages([message]);
-      }
-    };
-    // ------------------------
-    // Function call here: Fetching chat history
-    // ------------------------
-    fetchChats();
-  }, []);
+      };
+
+      // ------------------------
+      // Function call here: Fetching chat history
+      // ------------------------
+      fetchChats();
+    }
+  }, [newChat]);
 
   // useEffect(() => {
   //   if (!socket.connected) {

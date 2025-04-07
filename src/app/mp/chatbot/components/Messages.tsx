@@ -3,7 +3,7 @@ import Image from "next/image";
 import {useState, useRef, useEffect, memo} from "react";
 import {ChatbotMessageType} from "@/types";
 import CustomMarkdown from "../../components/global/ReactMarkdown";
-import CopyButton from "../../components/CopyButton";
+import {CopyButton, ShareButton} from "../../components/CopyButton";
 import {ChevronDown} from "lucide-react";
 
 const ChatbotMessages = memo(
@@ -57,7 +57,7 @@ const ChatbotMessages = memo(
     return (
       <>
         <div
-          className="flex-1 py-8 space-y-6 mx-auto mb-20 md:mb-32 sm:w-[35rem] lg:w-[50rem] scroll-container"
+          className="flex-1 py-8 lg:px-8 xl:pr-14 xl:pl-0 space-y-6 mx-auto mb-20 md:mb-32 sm:w-[35rem] md:w-[39rem] lg:w-[50rem] scroll-container"
           ref={scrollContainerRef}
         >
           {messages.map((message: any, index: number) => (
@@ -68,8 +68,8 @@ const ChatbotMessages = memo(
               <div
                 className={`inline-block rounded-xl break-words overflow-x-scroll scroll-container p-1 ${
                   message.role !== "PathAI"
-                    ? "text-light-light-black max-w-2xl lg:max-w-xl pr-3"
-                    : "text-light-light-black dark:text-dark-primary-text max-w-2xl lg:max-w-3xl pl-6"
+                    ? "text-light-light-black max-w-2xl lg:max-w-xl"
+                    : "text-light-light-black dark:text-dark-primary-text max-w-xs sm:max-w-xl lg:max-w-3xl"
                 }`}
               >
                 {message.role !== "PathAI" ? (
@@ -123,15 +123,20 @@ const ChatbotMessages = memo(
                       <p className="text-lg font-sans">PathAI</p>
                     </div>
 
-                    <div className={`grid gap-3 pr-8 pl-2 overflow-x-scroll max-w-full`}>
+                    <div className={`grid gap-3 px-1 max-w-full`}>
                       {/* Display both text content and visualization if available */}
                       {message.content && (
                         <div className="chatbot">
                           <bdi className="leading-10">
                             <CustomMarkdown content={message.content} />
                           </bdi>
-                          <div className="icon">
-                            <CopyButton selection={message.content} />
+                          <div className="flex items-center gap-2">
+                            <div className="icon">
+                              <CopyButton selection={message.content} />
+                            </div>
+                            <div className="icon">
+                              <ShareButton />
+                            </div>
                           </div>
                         </div>
                       )}

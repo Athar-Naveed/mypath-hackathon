@@ -7,6 +7,7 @@ const stateStore = create<StateType>()(
     (set) => ({
       user: null,
       userName: "",
+      img: "",
       email: "",
       open: false,
       department: "SST",
@@ -19,7 +20,7 @@ const stateStore = create<StateType>()(
       selectedChat: null,
       friendProfile: false,
       chats: [], // Initialize chats as an empty array
-      setChats: (chats) => set({ chats }),
+      setChats: (chats) => set({chats}),
       setUser: (user) => set(() => ({user: user})),
       setUserName: (name: string) => set(() => ({userName: name})),
       setEmail: (email: string) => set(() => ({email: email})),

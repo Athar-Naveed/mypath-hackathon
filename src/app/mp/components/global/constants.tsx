@@ -2,10 +2,11 @@
 // Imports
 // ----------------------------
 import {Role, StateType} from "@/types";
-import {Bot, Users2, User2, MessagesSquare, Settings, FolderPen} from "lucide-react";
+import {Bot, Users2, User2, MessagesSquare, Settings, FolderPen, History} from "lucide-react";
 
 import Cookies from "js-cookie";
 import toast from "react-hot-toast";
+
 // ----------------------------
 // Types
 // ----------------------------
@@ -34,10 +35,14 @@ export const sideNavigation: sideNavigationType[] = [
 ];
 
 export const navLinks = [
-  // {
-  //   title: "New Chat",
-  //   icon: FolderPen,
-  // },
+  {
+    title: "New Chat",
+    icon: FolderPen,
+  },
+  {
+    title: "Chat History",
+    icon: History,
+  },
 ];
 
 // ----------------------------
@@ -117,6 +122,40 @@ export const dropUpOptions = [
     desc: "Stuck? Let AI explain visually",
   },
 ];
+
+// Get initials from username
+export const getInitials = (userName: string) => {
+  if (!userName) return "";
+
+  const names = userName.split(" ");
+  if (names.length > 1) {
+    return `${names[0][0]}${names[1][0]}`.toUpperCase();
+  }
+  return userName[0].toUpperCase();
+};
+
+// Generate a consistent color based on username
+export const generateColor = (name: string) => {
+  const colors = [
+    "bg-green-100 text-green-600 dark:bg-green-900/40 dark:text-green-300",
+    "bg-blue-100 text-blue-600 dark:bg-blue-900/40 dark:text-blue-300",
+    "bg-purple-100 text-purple-600 dark:bg-purple-900/40 dark:text-purple-300",
+    "bg-amber-100 text-amber-600 dark:bg-amber-900/40 dark:text-amber-300",
+    "bg-rose-100 text-rose-600 dark:bg-rose-900/40 dark:text-rose-300",
+    "bg-cyan-100 text-cyan-600 dark:bg-cyan-900/40 dark:text-cyan-300",
+  ];
+
+  let hash = 0;
+  for (let i = 0; i < name.length; i++) {
+    hash = name.charCodeAt(i) + ((hash << 5) - hash);
+  }
+
+  return colors[Math.abs(hash) % colors.length];
+};
+
+export const generateSessionId = () => {
+  return `${Date.now()}-${Math.floor(Math.random() * 10000)}`;
+};
 
 export const oneChabotMessage = (
   role: Role,

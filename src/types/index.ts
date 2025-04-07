@@ -6,6 +6,7 @@ type UserType = {
   id: string;
   appwriteId?: string;
   name: string;
+  img: string;
   lastName?: string;
   email: string;
   password: string;
@@ -148,11 +149,15 @@ type StateQuizType = {
 };
 
 type ChatbotChatType = {
+  newChat: boolean;
+  fetchChat: boolean;
   thinking: boolean;
   remainingWords: number;
   messages: ChatbotMessageType[];
   inputMessage: string;
   allowedWords: number;
+  setNewChat: (newChat: boolean) => void;
+  setFetchChat: (fetchChat: boolean) => void;
   setThinking: (thinking: boolean) => void;
   setRemainingWords: (remainingWords: number) => void;
   // This line is the key change - allowing messages to be either an array or a function
@@ -172,12 +177,18 @@ type Card = {
   content: string;
   description: string; // Added detailed description for text section
 };
-interface ConfirmationModalProps {
+type ConfirmationModalProps = {
   isOpen: boolean;
   onClose: () => void;
   onConfirm: () => void;
-}
+};
 
+type MainAppStoreType = {
+  showChatHistory: boolean;
+  dark: boolean;
+  setDark: (dark: boolean) => void;
+  setShowChatHistory: (show: boolean) => void;
+};
 export type {
   Card,
   Role,
@@ -198,4 +209,5 @@ export type {
   ConfirmationModalProps,
   StateQuizType,
   QuizType,
+  MainAppStoreType,
 };

@@ -2,8 +2,7 @@
 // Imports
 // ------------------------
 import {Metadata} from "next";
-// import NewChat from "./components/NewChat";
-import ChatBotChat from "./components/ChatBotChat";
+import ChatbotUI from "./components/ChatbotUI";
 
 // ------------------------
 // Chatbot Page details
@@ -19,10 +18,7 @@ export const metadata: Metadata = {
 export default function Chatbot() {
   return (
     <>
-      <div className="grid">
-        {/* <NewChat /> */}
-        <ChatBotChat />
-      </div>
+      <ChatbotUI />
     </>
   );
 }

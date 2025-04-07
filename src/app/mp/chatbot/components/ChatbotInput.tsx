@@ -1,17 +1,23 @@
 "use client";
 import {Tooltip} from "@mui/material";
-import {GlobeIcon, Send, Trash2Icon, WandSparkles} from "lucide-react";
+import {GlobeIcon, Paperclip, Send, Trash2Icon, WandSparkles} from "lucide-react";
 import {useCallback, useEffect, useRef, useState} from "react";
 import {useChatbotStore} from "../../store/chatbotStore";
 import {ChatbotMessageType} from "@/types";
 import {socket} from "@/lib/socketClient";
 import stateStore from "@/store/zuStore";
 import {chatbotChat, clearChat, visualizer} from "../../mpHandler/chatbotChatHandler";
-import {dropUpOptions, oneChabotMessage} from "../../components/global/constants";
+import {
+  dropUpOptions,
+  generateSessionId,
+  oneChabotMessage,
+} from "../../components/global/constants";
 import ConfirmationModal from "../../components/Modal/ConfirmationModal";
 import DropUp from "../../components/Dropdown/dropUp";
-import quizStore from "@/store/quizStore";
+import quizStore from "@/app/mp/store/quizStore";
 import QuizModal from "../../components/Quiz/quiz";
+import {usePathname} from "next/navigation";
+import {useRouter} from "next/navigation";
 const ChatbotInputField = () => {
   const store = stateStore();
   const {
@@ -19,6 +25,9 @@ const ChatbotInputField = () => {
     remainingWords,
     allowedWords,
     inputMessage,
+    newChat,
+    setNewChat,
+    setFetchChat,
     setInputMessage,
     setRemainingWords,
     setMessages,
@@ -31,6 +40,8 @@ const ChatbotInputField = () => {
   const [deleteChat, setDeleteChat] = useState<boolean>(false);
   const [isQuiz, setIsQuiz] = useState<boolean>(false);
   const [selectedIndex, setSelectedIndex] = useState<number>(0);
+  const path = usePathname();
+  const route = useRouter();
   // ------------------------
   // Focus the input field when the screen is first loaded
   // ------------------------
@@ -74,21 +85,41 @@ const ChatbotInputField = () => {
     // -----------------------
     const trimmedMessage = inputMessage.trim();
     if (trimmedMessage === "") return;
-    let newMessage: ChatbotMessageType;
+    let sessionID: string = path.split("/")[3];
+    let newMessage: ChatbotMessageType; // Declare with type but don't initialize yet
 
-    if (inputMessage.startsWith("@quiz") || inputMessage.startsWith("quiz")) {
-      newMessage = {
-        role: "user",
-        category: "quiz",
-        content: inputMessage,
-      };
-    } else {
-      const trimmedMessage = inputMessage.trim();
+    // Handle new chat session
+    if (newChat) {
+      console.log(`New chat session`);
+      setNewChat(true);
+      sessionID = generateSessionId();
+      route.replace(`${path}/${sessionID}`);
+      setMessages([]); // Clear messages for new chat
+
+      // Create initial message for new chat
       newMessage = {
         role: "user",
         category: "chat",
         content: trimmedMessage,
       };
+    }
+    // Handle existing chat session
+    else {
+      if (inputMessage.startsWith("@quiz") || inputMessage.startsWith("quiz")) {
+        newMessage = {
+          role: "user",
+          category: "quiz",
+          content: inputMessage,
+        };
+      } else {
+        console.log(`Continuing existing chat`);
+
+        newMessage = {
+          role: "user",
+          category: "chat",
+          content: trimmedMessage,
+        };
+      }
     }
 
     setMessages((prevMessages) => [...prevMessages, newMessage]);
@@ -138,6 +169,7 @@ const ChatbotInputField = () => {
     } finally {
       setThinking(false);
       setIsQuiz(false);
+      setNewChat(false);
     }
   };
 
@@ -213,7 +245,11 @@ const ChatbotInputField = () => {
       setThinking(false);
     }
   };
-  const confirmClear = () => setDeleteChat(true);
+  const confirmClear = () => {
+    setDeleteChat(true);
+    setFetchChat(true);
+    setNewChat(false);
+  };
   const closeModal = () => setDeleteChat(false);
   // ------------------
   // Clearing Chat function
@@ -256,7 +292,7 @@ const ChatbotInputField = () => {
   const handleSetInternet = () => setInternet(!internet);
   return (
     <>
-      <div className="fixed bottom-0 left-0 right-0 max-w-xl lg:max-w-3xl mx-auto md:px-4 pb-2 lg:pb-6">
+      <div className="fixed bottom-0 left-0 right-0 max-w-xl md:max-w-2xl lg:max-w-3xl mx-auto md:px-4 pb-2 lg:pb-6">
         <div className="flex flex-col relative border rounded-xl border-dark-custom-blue-stroke dark:border-dark-custom-blue-stroke bg-white dark:bg-dark-custom-blue p-1 lg:p-2">
           <textarea
             disabled={thinking}
@@ -275,18 +311,29 @@ const ChatbotInputField = () => {
           </div>
           <div className="flex justify-between items-center pt-2">
             <div className="left flex">
-              <Tooltip title="Visualize response" placement="top">
+              <Tooltip title="Upload File" placement="top">
                 <button
                   disabled={thinking}
                   onClick={handleVisualizer}
                   className="chatIconButton group"
-                  aria-label="Visualize button"
+                  aria-label="Upload File"
                 >
-                  <WandSparkles className="chatIcon" />
-                  <span className="chatSpan">Visualize</span>
+                  <Paperclip className="chatIcon" />
+                  <span className="chatSpan">Upload File</span>
                 </button>
               </Tooltip>
-              {/*               
+              <Tooltip title="Clear Chat" placement="top">
+                <button
+                  disabled={thinking}
+                  onClick={confirmClear}
+                  className="chatIconButton group"
+                  aria-label="Clear Chat"
+                >
+                  <Trash2Icon className="chatIcon" />
+                  <span className="chatSpan">Clear Chat</span>
+                </button>
+              </Tooltip>
+
               <Tooltip title="Internet Search" placement="top">
                 <button
                   disabled={thinking}
@@ -300,18 +347,6 @@ const ChatbotInputField = () => {
                   >
                     Search Internet
                   </span>
-                </button>
-              </Tooltip>
-              */}
-              <Tooltip title="Clear Chat" placement="top">
-                <button
-                  disabled={thinking}
-                  onClick={confirmClear}
-                  className="chatIconButton group"
-                  aria-label="clear chat"
-                >
-                  <Trash2Icon className="chatIcon" />
-                  <span className="chatSpan">Clear Chat</span>
                 </button>
               </Tooltip>
             </div>

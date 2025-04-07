@@ -1,7 +1,7 @@
 "use client";
 
 import {useState} from "react";
-import quizStore from "@/store/quizStore";
+import quizStore from "@/app/mp/store/quizStore";
 
 const QuizModal = () => {
   const {quiz, setShowQuiz, totalScore, setTotalScore} = quizStore();

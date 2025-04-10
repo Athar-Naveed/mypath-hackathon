@@ -2,7 +2,16 @@
 // Imports
 // ----------------------------
 import {Role, StateType} from "@/types";
-import {Bot, Users2, User2, MessagesSquare, Settings, FolderPen, History} from "lucide-react";
+import {
+  Bot,
+  Users2,
+  User2,
+  MessagesSquare,
+  Settings,
+  FolderPen,
+  History,
+  BotIcon,
+} from "lucide-react";
 
 import Cookies from "js-cookie";
 import toast from "react-hot-toast";
@@ -70,6 +79,29 @@ export const settings = [
   },
   {
     title: "Billing",
+  },
+];
+
+export const agents = [
+  {
+    title: "Parabola AI",
+    icon: BotIcon,
+    desc: "There to help you with your Maths stuff!",
+  },
+  {
+    title: "Newton AI",
+    icon: BotIcon,
+    desc: "There to help you with your Physics stuff!",
+  },
+  {
+    title: "Entropy AI",
+    icon: BotIcon,
+    desc: "There to help you with your Chemistry stuff!",
+  },
+  {
+    title: "Socrates AI",
+    icon: BotIcon,
+    desc: "There to help you with your History stuff!",
   },
 ];
 

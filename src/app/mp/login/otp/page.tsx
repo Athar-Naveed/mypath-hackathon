@@ -2,7 +2,7 @@
 // Imports
 // -------------------------------
 import {Metadata} from "next";
-import Otp from "../../components/OTP/Otp";
+import Otp from "../../components/Auth/OTP/Otp";
 import {Toaster} from "react-hot-toast";
 
 // -------------------------------

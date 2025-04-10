@@ -1,6 +1,6 @@
 "use client";
 import {useState} from "react";
-import {Copy, Check, Share2Icon, Trash2} from "lucide-react";
+import {Copy, Check, Share2Icon, Trash2, MoreVertical} from "lucide-react";
 import {Tooltip} from "@mui/material";
 import Image from "next/image";
 export const CopyButton = ({selection, color = undefined}: {selection: string; color?: string}) => {
@@ -86,6 +86,21 @@ export const DeleteButton = () => {
           }}
         >
           <Trash2 className={`size-4 text-dark-custom-dark-blue dark:text-white`} />
+        </button>
+      </Tooltip>
+    </>
+  );
+};
+export const MoreButton = () => {
+  return (
+    <>
+      <Tooltip arrow={true} title={"More Options"} placement="bottom">
+        <button
+          onClick={() => {
+            console.log("More Options");
+          }}
+        >
+          <MoreVertical className={`size-4 text-dark-custom-dark-blue dark:text-white`} />
         </button>
       </Tooltip>
     </>

@@ -1,6 +1,6 @@
 {
   "name": "mypath-webapp",
-  "version": "1.2.6",
+  "version": "1.9.8",
   "private": true,
   "scripts": {
     "dev": "next dev --turbopack --port 3001",

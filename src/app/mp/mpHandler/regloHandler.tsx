@@ -30,11 +30,11 @@ export const UserRegisterHandler = async (values: any) => {
 // Logging user in
 // ----------------------
 export const UserLoginHandler = async (values: any) => {
-  const {setUserName, setUser,setEmail} = stateStore.getState();
+  const {setUserName, setUser, setEmail} = stateStore.getState();
   try {
     const res = await axios.post("/api/login", values);
     const data = res.data;
-    
+
     Cookies.set("serviceToken", data.token);
     setUser(data.user);
     setUserName(data.user.name);
@@ -44,19 +44,18 @@ export const UserLoginHandler = async (values: any) => {
     // ----------------------
     // You can also check for error.response for better error details if needed
     // ----------------------
-    
+
     if (error.response.status == 401) {
       return {
         message: "Incorrect email or password!",
         status: error.response ? error.response.status : 401,
       };
-    }
-    else if (error.response.status === 403){
-      setEmail(values.email)
+    } else if (error.response.status === 403) {
+      setEmail(values.email);
       return {
         message: "Please verify your email! Redirecting you to OTP page.",
         status: error.response ? error.response.status : 403,
-      }
+      };
     }
     return {message: error, status: error.response ? error.response.status : 500};
   }
@@ -91,7 +90,6 @@ export const validateOTP = async (values: {email: string; otp: string}) => {
 // Resending OTP
 // ----------------------
 export const resendOTP = async (email: string) => {
-  
   try {
     const res = await axios.post("https://campuscompanionserver.fly.dev/v1/auth/resend-otp", {
       email: email,

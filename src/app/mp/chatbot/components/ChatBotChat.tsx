@@ -26,7 +26,6 @@ const ChatBotChat = () => {
   // ------------------------
 
   useEffect(() => {
-    console.log(`new chat: ${newChat} -- fetch chat: ${fetchChat}`);
     if (!newChat && fetchChat) {
       const fetchChats = async () => {
         try {

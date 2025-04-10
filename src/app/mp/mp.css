@@ -32,11 +32,9 @@
   .icon-color {
     @apply text-light-light-black dark:text-dark-secondary-text;
   }
-  .reglo {
-    @apply flex items-center justify-center;
-  }
+
   .reglo-form {
-    @apply max-w-lg sm:max-w-md xl:max-w-xl p-6 mt-20 bg-white rounded-lg shadow-md;
+    @apply max-w-lg sm:max-w-md xl:max-w-xl;
   }
   .reglo-input-field {
     @apply w-full px-3 py-2 border border-dark-custom-blue text-dark-custom-blue placeholder:text-slate-600 bg-transparent rounded-md pl-10 outline-none;

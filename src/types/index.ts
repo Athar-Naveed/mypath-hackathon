@@ -151,11 +151,13 @@ type StateQuizType = {
 type ChatbotChatType = {
   newChat: boolean;
   fetchChat: boolean;
+  agentName: string;
   thinking: boolean;
   remainingWords: number;
   messages: ChatbotMessageType[];
   inputMessage: string;
   allowedWords: number;
+  setAgentName: (name: string) => void;
   setNewChat: (newChat: boolean) => void;
   setFetchChat: (fetchChat: boolean) => void;
   setThinking: (thinking: boolean) => void;

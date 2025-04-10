@@ -13,7 +13,7 @@ import {
   Trash2,
 } from "lucide-react";
 import {motion, AnimatePresence} from "framer-motion";
-import {DeleteButton, ShareButton} from "../CopyButton";
+import {DeleteButton, MoreButton, ShareButton} from "../CopyButton";
 
 interface ChatItem {
   id: string;
@@ -215,25 +215,27 @@ const ChatHistoryModal = ({setShowChatHistory}: {setShowChatHistory: (value: boo
                   </div>
                   <ul className="mt-1">
                     {filteredRecentChats.map((chat) => (
-                      <li key={chat.id}>
-                        <button
-                          onClick={() => handleSelectChat(chat.id)}
-                          className={`group text-dark-custom-dark-blue dark:text-white/80 w-full flex justify-between items-center px-4 py-3 hover:bg-gray-100 dark:hover:bg-gray-800/70 transition-colors ${
-                            selectedChat === chat.id
-                              ? "bg-blue-50 dark:bg-blue-900/20 border-l-4 border-blue-500 dark:border-blue-500"
-                              : ""
-                          }`}
+                      <li
+                        key={chat.id}
+                        onClick={() => handleSelectChat(chat.id)}
+                        className={`group cursor-pointer text-dark-custom-dark-blue dark:text-white/80 w-full flex justify-between items-center px-4 py-3 hover:bg-gray-100 dark:hover:bg-gray-800/70 transition-colors ${
+                          selectedChat === chat.id
+                            ? "bg-blue-50 dark:bg-blue-900/20 border-l-4 border-blue-500 dark:border-blue-500"
+                            : ""
+                        }`}
+                      >
+                        <span
+                          className={`text-sm ${selectedChat === chat.id ? "font-medium text-blue-600 dark:text-blue-400" : ""}`}
                         >
-                          <span
-                            className={`text-sm ${selectedChat === chat.id ? "font-medium text-blue-600 dark:text-blue-400" : ""}`}
-                          >
-                            {chat.title}
-                          </span>
-                          <span className="hidden group-hover:flex items-center gap-2 text-xs text-gray-500 dark:text-gray-400 bg-gray-100 dark:bg-gray-800 px-2 py-1 rounded-full">
-                            <ShareButton />
-                            <DeleteButton />
-                          </span>
-                        </button>
+                          {chat.title}
+                        </span>
+                        <span
+                          className={`hidden group-hover:flex items-center gap-2 text-xs text-gray-500 dark:text-gray-400 bg-gray-100 dark:bg-gray-800 px-2 py-1 rounded-full`}
+                        >
+                          <ShareButton />
+                          <DeleteButton />
+                          <MoreButton />
+                        </span>
                       </li>
                     ))}
                   </ul>
@@ -251,25 +253,25 @@ const ChatHistoryModal = ({setShowChatHistory}: {setShowChatHistory: (value: boo
                   </div>
                   <ul className="mt-1">
                     {filteredOlderChats.map((chat) => (
-                      <li key={chat.id}>
-                        <button
-                          onClick={() => handleSelectChat(chat.id)}
-                          className={`group text-dark-custom-dark-blue dark:text-white/80 w-full flex justify-between items-center px-4 py-3 hover:bg-gray-100 dark:hover:bg-gray-800/70 transition-colors ${
-                            selectedChat === chat.id
-                              ? "bg-blue-50 dark:bg-blue-900/20 border-l-4 border-blue-500 dark:border-blue-500"
-                              : ""
-                          }`}
+                      <li
+                        key={chat.id}
+                        onClick={() => handleSelectChat(chat.id)}
+                        className={`group cursor-pointer text-dark-custom-dark-blue dark:text-white/80 w-full flex justify-between items-center px-4 py-3 hover:bg-gray-100 dark:hover:bg-gray-800/70 transition-colors ${
+                          selectedChat === chat.id
+                            ? "bg-blue-50 dark:bg-blue-900/20 border-l-4 border-blue-500 dark:border-blue-500"
+                            : ""
+                        }`}
+                      >
+                        <span
+                          className={`text-sm text-left ${selectedChat === chat.id ? "font-medium text-blue-600 dark:text-blue-400" : ""}`}
                         >
-                          <span
-                            className={`text-sm text-left ${selectedChat === chat.id ? "font-medium text-blue-600 dark:text-blue-400" : ""}`}
-                          >
-                            {chat.title}
-                          </span>
-                          <span className="hidden group-hover:flex items-center gap-2 text-xs text-gray-500 dark:text-gray-400 bg-gray-100 dark:bg-gray-800 px-2 py-1 rounded-full">
-                            <ShareButton />
-                            <DeleteButton />
-                          </span>
-                        </button>
+                          {chat.title}
+                        </span>
+                        <span className="hidden group-hover:flex items-center gap-2 text-xs text-gray-500 dark:text-gray-400 bg-gray-100 dark:bg-gray-800 px-2 py-1 rounded-full">
+                          <ShareButton />
+                          <DeleteButton />
+                          <MoreButton />
+                        </span>
                       </li>
                     ))}
                   </ul>

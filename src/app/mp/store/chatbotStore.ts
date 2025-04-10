@@ -7,11 +7,14 @@ export const useChatbotStore = create<ChatbotChatType>()(
     (set) => ({
       newChat: true,
       fetchChat: false,
+      agentName: "",
       thinking: false,
       allowedWords: 600,
       remainingWords: 600,
       messages: [],
       inputMessage: "",
+
+      setAgentName: (name) => set({agentName: name}),
       setNewChat: (value: boolean) => set({newChat: value}),
       setFetchChat: (value: boolean) => set({fetchChat: value}),
       setThinking: (thinking) => set({thinking}),

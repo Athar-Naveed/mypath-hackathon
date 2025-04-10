@@ -5,7 +5,7 @@
 import React, {useRef, useEffect, useState} from "react";
 import {useRouter} from "next/navigation";
 import {Formik, Form, Field} from "formik";
-import {resendOTP, validateOTP} from "../../mpHandler/regloHandler";
+import {resendOTP, validateOTP} from "../../../mpHandler/regloHandler";
 import toast from "react-hot-toast";
 import stateStore from "@/store/zuStore";
 import Link from "next/link";
@@ -20,7 +20,7 @@ const Otp = () => {
   const inputRefs = useRef<(HTMLInputElement | null)[]>([]);
   const [submitting, setSubmitting] = useState<boolean>(false);
   const route = useRouter();
-  
+
   // ----------------------------
   // Focusing OTP's input field
   // ----------------------------
@@ -29,7 +29,7 @@ const Otp = () => {
       inputRefs.current[0].focus();
     }
   }, []);
-  
+
   // ----------------------------
   // Capturing keyboard events inside OTP input field
   // ----------------------------
@@ -84,16 +84,16 @@ const Otp = () => {
         </Link>
       </h1>
     );
-    // ----------------------------
-    // Else displaying the OTP page
-    // ----------------------------
-    return (
-      <div className="min-h-screen flex items-center justify-center bg-gray-100 dark:bg-gray-900 px-4 sm:px-6 lg:px-8">
+  // ----------------------------
+  // Else displaying the OTP page
+  // ----------------------------
+  return (
+    <div className="min-h-screen flex items-center justify-center bg-gray-100 dark:bg-gray-900 px-4 sm:px-6 lg:px-8">
       <div className="bg-white dark:bg-gray-800 p-4 sm:p-6 md:p-8 rounded-lg shadow-md w-full max-w-[320px] sm:max-w-[400px] md:max-w-[480px] lg:max-w-[520px]">
         <h2 className="text-xl sm:text-2xl md:text-3xl font-bold mb-4 sm:mb-6 text-center text-gray-800 dark:text-white">
           Enter OTP
         </h2>
-      {/* 
+        {/* 
       // ----------------------------
       // Else displaying the OTP page
       // ---------------------------- 

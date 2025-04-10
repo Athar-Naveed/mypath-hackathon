@@ -13,7 +13,7 @@ const RegloComponent = () => {
   const reglo = stateStore((state) => state.reglo);
   return (
     <>
-      <section className="flex items-center justify-center">
+      <section className="">
         <div className="reglo">{reglo ? <Login /> : <Register />}</div>
       </section>
     </>

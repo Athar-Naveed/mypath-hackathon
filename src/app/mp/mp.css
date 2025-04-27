@@ -1,0 +1,57 @@
+@tailwind base;
+
+/* Hide scrollbar for WebKit browsers */
+.scroll-container::-webkit-scrollbar {
+  display: none; /* Chrome, Safari, Edge */
+}
+
+/* Hide scrollbar for other browsers */
+.scroll-container {
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+  overflow: -moz-scrollbars-none; /* Older versions of Firefox */
+}
+
+/* Fallback for Safari (optional - not needed if the scrollbar is hidden in webkit above) */
+.scroll-container {
+  overflow: auto; /* Ensures scrollable content */
+}
+
+@tailwind components;
+@tailwind utilities;
+
+@layer components {
+  html,
+  body {
+    @apply bg-white/80 dark:bg-dark-custom-dark-blue m-0 p-0 w-full h-full selection:bg-dark-button-blue selection:text-light-light-white;
+  }
+
+  * {
+    @apply box-border;
+  }
+  .icon-color {
+    @apply text-light-light-black dark:text-dark-secondary-text;
+  }
+
+  .reglo-form {
+    @apply max-w-lg sm:max-w-md xl:max-w-xl;
+  }
+  .reglo-input-field {
+    @apply w-full px-3 py-2 border border-dark-custom-blue text-dark-custom-blue dark:border-gray-400 dark:text-gray-400 placeholder:text-slate-600 dark:placeholder:text-gray-400 bg-transparent rounded-md pl-10 outline-none;
+  }
+  .profile-input-field {
+    @apply w-full px-4 py-4  border border-dark-custom-blue dark:border-light-light-white text-dark-custom-blue dark:text-light-light-white dark:placeholder:text-slate-300 placeholder:text-slate-400 bg-white dark:bg-dark-custom-dark-blue rounded-md outline-none;
+  }
+  .smi-input-field {
+    @apply bg-light-light-white dark:bg-dark-custom-dark-blue;
+  }
+  .chatIcon {
+    @apply size-5;
+  }
+  .chatIconButton {
+    @apply flex items-center gap-2 disabled:text-dark-secondary-text/50 disabled:pointer-events-none bg-transparent transition-all text-black dark:text-dark-primary-text hover:bg-slate-100 dark:hover:bg-slate-800 rounded-full p-2 focus:outline-none;
+  }
+  .chatSpan {
+    @apply hidden group-hover:flex text-xs font-semibold;
+  }
+}
